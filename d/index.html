@@ -1,0 +1,272 @@
+<meta charset="UTF-8">
+<title>Timer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap');
+.bg {
+  background:#fff;
+  height:100%;
+  width:100%;
+  position:fixed;
+  left:0px;
+  top:0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-user-select: none;
+}
+svg {
+  width:250px;
+  max-width:80%;
+  -webkit-user-select: none;
+}
+#line-1 {
+  stroke-dasharray:282px;
+  stroke-dashoffset:282px;
+  -webkit-user-select: none;
+}
+#timertext {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight:700;
+  font-size:1.5rem;
+  -webkit-user-select: none;
+}
+#canvas {
+  position:fixed;
+  top:0ox;
+  left:0px;
+  -webkit-user-select: none;
+}
+  @media (prefers-color-scheme: dark) {
+    .bg {
+  background:#1a1a1a;
+    }
+}
+</style>
+
+<div class="bg">
+<svg height="100%" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" version="1.1" viewBox="0 0 120 120" id="svg-1">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="Units" value="Points"/>
+<vectornator:setting key="DynamicGuides" value="0"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+</metadata>
+<defs/>
+<g id="圖層1" vectornator:layerName="圖層1">
+<path stroke="rgba(0, 0, 0, 0.5)" stroke-width="8" d="M60+15L60+15C84.8528+15+105+34.483+105+58.5165L105+61.4835C105+85.517+84.8528+105+60+105L60+105C35.1472+105+15+85.517+15+61.4835L15+58.5165C15+34.483+35.1472+15+60+15Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round" id="line-0"/>
+  
+<path stroke="#000" stroke-width="8" d="M60+15L60+15C84.8528+15+105+34.483+105+58.5165L105+61.4835C105+85.517+84.8528+105+60+105L60+105C35.1472+105+15+85.517+15+61.4835L15+58.5165C15+34.483+35.1472+15+60+15Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round" id="line-1"/>
+</g>
+</svg>
+  <div id="timertext">---</div>
+</div>
+<canvas id="canvas"></canvas>
+
+<script>
+var nn_time = new Date() ;
+var timer_time = new Date('2021-07-25T00:00:00');
+var color = '#3260d7' ;
+var msg = '完成' ;
+
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+$('#line-1,#line-0').attr('stroke',color);
+$('#timertext').css({'color':color})
+$('#line-0').attr('stroke','rgba(' + hexToRgb(color).r + ', ' + hexToRgb(color).g + ', ' + hexToRgb(color).b + ', 0.2)');
+
+
+//confetti
+let W = window.innerWidth;
+let H = window.innerHeight;
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const maxConfettis = 50;
+const particles = [];
+
+const possibleColors = [
+  "#ca0a27",
+  "#f7cf40",
+  "#039cc3",
+  "#21d87e",
+  "#0c51a4",
+  "#4f6d9e",
+  "#10c6a4",
+  "#309bd9",
+  "#b2c9d8",
+  "#f4b8b6",
+  "#be4c68",
+  "#0b814d",
+  "#29d8ce"
+];
+
+function randomFromTo(from, to) {
+  return Math.floor(Math.random() * (to - from + 1) + from);
+}
+
+function confettiParticle() {
+  this.x = Math.random() * W; // x
+  this.y = Math.random() * H - H; // y
+  this.r = randomFromTo(11, 33); // radius
+  this.d = Math.random() * maxConfettis + 11;
+  this.color =
+    possibleColors[Math.floor(Math.random() * possibleColors.length)];
+  this.tilt = Math.floor(Math.random() * 33) - 11;
+  this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+  this.tiltAngle = 0;
+
+  this.draw = function() {
+    context.beginPath();
+    context.lineWidth = this.r / 2;
+    context.strokeStyle = this.color;
+    context.moveTo(this.x + this.tilt + this.r / 3, this.y);
+    context.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
+    return context.stroke();
+  };
+}
+
+function Draw() {
+  const results = [];
+
+  // Magical recursive functional love
+  requestAnimationFrame(Draw);
+
+  context.clearRect(0, 0, W, window.innerHeight);
+
+  for (var i = 0; i < maxConfettis; i++) {
+    results.push(particles[i].draw());
+  }
+
+  let particle = {};
+  let remainingFlakes = 0;
+  for (var i = 0; i < maxConfettis; i++) {
+    particle = particles[i];
+
+    particle.tiltAngle += particle.tiltAngleIncremental;
+    particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
+    particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
+
+    if (particle.y <= H) remainingFlakes++;
+
+    // If a confetti has fluttered out of view,
+    // bring it back to above the viewport and let if re-fall.
+    if (particle.x > W + 30 || particle.x < -30 || particle.y > H) {
+      particle.x = Math.random() * W;
+      particle.y = -30;
+      particle.tilt = Math.floor(Math.random() * 10) - 20;
+    }
+  }
+
+  return results;
+}
+
+window.addEventListener(
+  "resize",
+  function() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  },
+  false
+);
+
+// Push new confetti objects to `particles[]`
+for (var i = 0; i < maxConfettis; i++) {
+  particles.push(new confettiParticle());
+}
+
+// Initialize
+canvas.width = W;
+canvas.height = H;
+//confetti-end
+
+
+
+
+
+
+
+function setl(g) {
+  var gt = parseInt($('#line-1').css('stroke-dasharray')) ;
+  $('#line-1').css({'stroke-dashoffset':gt*(100-g)/100,'transition':'0.3s'});
+  $('#pre').html(g + '%')
+}
+setl(0)
+
+var eInterval = setInterval(function() {
+  var nowtime = new Date() ;
+  var gt = (timer_time.getTime()-nowtime.getTime()) ;
+  var gt_dd = (gt/1000/60/60/24).toFixed(0) ;
+  var gt_hh = (gt/1000/60/60).toFixed(0) ;
+  var gt_mm = (gt/1000/60).toFixed(0) ;
+  var gt_ss = (gt/1000).toFixed(0) ;
+  
+  var tyu = gt_ss ;
+  if((gt/1000/60/60/24) >= 1) {
+  tyu = gt_dd + '天';
+  }
+    else {
+  if((gt/1000/60/60) >= 1) {
+    tyu = gt_hh + '小時';
+  }
+   else {
+     if((gt/1000/60) >= 1) {
+    tyu = gt_mm + '分鐘' ;
+  }
+     else {    
+    tyu = gt_ss + '秒';
+     }
+     
+     
+     
+   }
+      }
+  var gt_1 = (timer_time.getTime()-nn_time.getTime()) ;
+  var gt_p = 100-(gt/gt_1*100).toFixed(2) ;
+  $('#timertext').html(tyu);
+  if(gt < 0) {
+  setl(100);
+  clearInterval(eInterval);
+  $('#timertext').html(msg);
+    Draw();
+  }
+  else {
+   setl(gt_p) 
+  }
+},100); 
+</script>
