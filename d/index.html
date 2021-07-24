@@ -82,8 +82,12 @@ svg {
 <canvas id="canvas"></canvas>
 
 <script>
+  var getUrlString = location.href;
+var url = new URL(getUrlString);
+var g = url.searchParams.get('g');
+  
 var nn_time = new Date() ;
-var timer_time = new Date('2021-07-25T00:00:00');
+var timer_time = new Date(url.searchParams.get('t2'));
 var color = '#3260d7' ;
 var msg = '完成' ;
 
