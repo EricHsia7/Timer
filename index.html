@@ -126,8 +126,7 @@ Date.prototype.yyyymmdd = function() {
 };
 
 document.querySelector('#time').addEventListener('change', updateValue);
-document.querySelector('#color').addEventListener('change', updateValue);
-function updateValue(e) {
+function updateValue() {
   var date = new Date();
  var gtu = (document.querySelector('#time').value + ':00').toString() ;
   var ur = 'https://erichsia7.github.io/Timer/d/?t1=' + date.yyyymmdd() + '&t2=' + gtu + '&c=' + $('.co[s="1"]').attr('style').split('#')[1] ;
@@ -144,6 +143,7 @@ ripple('.co','#000','0.4',888,'true');
   $('.co').click(function() {
   $('.co').attr('s','0');
   $(this).attr('s','1');
+    updateValue()
 });
   });
 </script>
