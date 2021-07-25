@@ -194,6 +194,7 @@ ripple('.co','#fff','0.4',888,'true');
   for (var xi=0; xi<colorpl.length; xi++){
     $('.color_box').append('<div class="co" style="--co-color:' + colorpl[xi] + '" s="0"></div>');
   }
+    $('.color_box').css({'height':Math.ceil(colorpl.length/4)*45});
   $('.co').click(function() {
   $('.co').attr('s','0');
   $(this).attr('s','1');
