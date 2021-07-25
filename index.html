@@ -102,14 +102,7 @@ background:#1f1f1f;
 <input type="datetime-local" id="time">
   
 <div class="color_box m10">
-  <div class="co" style="--co-color:#1e3c4f"></div>
-  <div class="co" style="--co-color:#244e52"></div>
-  <div class="co" style="--co-color:#277671"></div>
   <div class="co" style="--co-color:#2a9d8f" s="1" id="def"></div>
-  <div class="co" style="--co-color:#49a18a"></div>
-  <div class="co" style="--co-color:#efb366"></div>
-  <div class="co" style="--co-color:#f2834f"></div>
-  <div class="co" style="--co-color:#f91c15"></div>
 </div>
  
 <input type="text" id="url" readonly="readonly" class="m10">
@@ -191,10 +184,16 @@ function copy() {
   document.querySelector('#url').select();
   document.execCommand("Copy");
 }
+  
   $(document).ready(function() {
 ripple('.btn','#fff','0.4',1200,'true');
 ripple('.co','#fff','0.4',888,'true');
     
+    var colorpl = ['#f72585','#b5179e','#7209b7','#560bad','#480ca8','#3a0ca3','#3f37c9','#4361ee','#4895ef','#4cc9f0'] ;
+  
+  for (var xi=0; xi<colorpl.length; xi++){
+    $('.color_box').append('<div class="co" style="--co-color:' + colorpl[xi] + '" s="0"></div>');
+  }
   $('.co').click(function() {
   $('.co').attr('s','0');
   $(this).attr('s','1');
