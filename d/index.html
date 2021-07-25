@@ -92,7 +92,6 @@ var timer_time = new Date(url.searchParams.get('t2'));
 var color = '#3260d7' ;
 var msg = '完成' ;
 if('#' + url.searchParams.get('c') === '#') {
-  
 }
   else {
     var color = '#' + url.searchParams.get('c') ;
@@ -128,21 +127,7 @@ const context = canvas.getContext("2d");
 const maxConfettis = 50;
 const particles = [];
 
-const possibleColors = [
-  "#ca0a27",
-  "#f7cf40",
-  "#039cc3",
-  "#21d87e",
-  "#0c51a4",
-  "#4f6d9e",
-  "#10c6a4",
-  "#309bd9",
-  "#b2c9d8",
-  "#f4b8b6",
-  "#be4c68",
-  "#0b814d",
-  "#29d8ce"
-];
+const possibleColors = [color,color];
 
 function randomFromTo(from, to) {
   return Math.floor(Math.random() * (to - from + 1) + from);
