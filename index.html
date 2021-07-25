@@ -56,6 +56,7 @@ background:#1f1f1f;
 
 <div class="bg">
 <input type="datetime-local" id="time">
+<input type="text" id="color" class="m10" placeholder="輸入主題顏色">
 <input type="text" id="url" readonly="readonly" class="m10">
   <div class="btn m10" ripple-onclick="copy()">複製連結</div>
 </div>
@@ -83,7 +84,7 @@ document.querySelector('#time').addEventListener('change', updateValue);
 function updateValue(e) {
   var date = new Date();
  var gtu = (document.querySelector('#time').value + ':00').toString() ;
-  var ur = 'https://erichsia7.github.io/Timer/d/?t1=' + date.yyyymmdd() + '&t2=' + gtu ;
+  var ur = 'https://erichsia7.github.io/Timer/d/?t1=' + date.yyyymmdd() + '&t2=' + gtu + '&c=' + document.querySelector('#color').value.split('#')[1] ;
 document.querySelector('#url').value = ur ;
 }
 function copy() {
