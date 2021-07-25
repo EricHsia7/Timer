@@ -137,9 +137,11 @@ function copy() {
   document.querySelector('#url').select();
   document.execCommand("Copy");
 }
+  
+ripple('.btn','#fff','0.4',1200,'true');
+ripple('.co','#000','0.4',888,'true');
   $('.co').click(function() {
   $('.co').attr('s','0');
-  $(this).attr('s','1')
-})
-ripple('.btn,.co','#fff','0.4',1200,'true');
+  $(this).attr('s','1');
+});
 </script>
