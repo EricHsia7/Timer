@@ -129,7 +129,7 @@ document.querySelector('#time').addEventListener('change', updateValue);
 function updateValue() {
   var date = new Date();
  var gtu = (document.querySelector('#time').value + ':00').toString() ;
-  var ur = 'https://erichsia7.github.io/Timer/d/?t1=' + date.yyyymmdd() + '&t2=' + gtu + '&c=' + $('.co[s="1"]').attr('style').split('#')[1] ;
+  var ur = 'https://erichsia7.github.io/Timer/d/?t1=' + date.yyyymmdd() + '&t2=' + gtu + '&c=' + $('.co[s="1"]').attr('style').split('#')[1].split(';')[0] ;
 document.querySelector('#url').value = ur ;
 }
 function copy() {
