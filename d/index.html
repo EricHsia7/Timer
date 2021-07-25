@@ -91,7 +91,12 @@ var nn_time = new Date() ;
 var timer_time = new Date(url.searchParams.get('t2'));
 var color = '#3260d7' ;
 var msg = '完成' ;
-
+if('#' + url.searchParams.get('c') === '#') {
+  
+}
+  else {
+    var color = '#' + url.searchParams.get('c') ;
+  }
 
 function componentToHex(c) {
   var hex = c.toString(16);
