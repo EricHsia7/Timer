@@ -80,7 +80,7 @@ Date.prototype.yyyymmdd = function() {
 };
 
 document.querySelector('#time').addEventListener('change', updateValue);
-
+document.querySelector('#color').addEventListener('change', updateValue);
 function updateValue(e) {
   var date = new Date();
  var gtu = (document.querySelector('#time').value + ':00').toString() ;
