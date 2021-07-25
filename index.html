@@ -187,13 +187,14 @@ function copy() {
   
   $(document).ready(function() {
 ripple('.btn','#fff','0.4',1200,'true');
-ripple('.co','#fff','0.4',888,'true');
+
     
     var colorpl = ['#f72585','#b5179e','#7209b7','#560bad','#480ca8','#3a0ca3','#3f37c9','#4361ee','#4895ef','#4cc9f0','#d9ed92','#99d98c','#76c893','#52b69a','#34a0a4','#168aad','#1a759f','#1e6091','#184e77'] ;
   
   for (var xi=0; xi<colorpl.length; xi++){
     $('.color_box').append('<div class="co" style="--co-color:' + colorpl[xi] + '" s="0"></div>');
   }
+    ripple('.co','#fff','0.4',888,'true');
     $('.color_box').css({'height':Math.ceil(colorpl.length/4)*45});
   $('.co').click(function() {
   $('.co').attr('s','0');
