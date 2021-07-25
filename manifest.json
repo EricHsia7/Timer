@@ -28,6 +28,5 @@
     "type": "image/png"
   }
   ],
-  "start_url": "./?pwa=1",
   "display": "standalone"
 }
