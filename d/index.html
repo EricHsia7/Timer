@@ -129,8 +129,9 @@ $('#line-0').attr('stroke','rgba(' + hexToRgb(color).r + ', ' + hexToRgb(color).
 
 
 //confetti
-let W = window.innerWidth*1.5;
-let H = window.innerHeight*1.5;
+  var scal = 2 ;
+let W = window.innerWidth*scal;
+let H = window.innerHeight*scal;
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const maxConfettis = 30;
@@ -200,10 +201,10 @@ function Draw() {
 window.addEventListener(
   "resize",
   function() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    //W = window.innerWidth;
+    //H = window.innerHeight;
+    //canvas.width = window.innerWidth;
+    //canvas.height = window.innerHeight;
   },
   false
 );
