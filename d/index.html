@@ -129,8 +129,8 @@ $('#line-0').attr('stroke','rgba(' + hexToRgb(color).r + ', ' + hexToRgb(color).
 
 
 //confetti
-let W = window.innerWidth;
-let H = window.innerHeight;
+let W = window.innerWidth*1.5;
+let H = window.innerHeight*1.5;
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const maxConfettis = 30;
@@ -168,7 +168,7 @@ function Draw() {
   // Magical recursive functional love
   requestAnimationFrame(Draw);
 
-  context.clearRect(0, 0, W, window.innerHeight);
+  context.clearRect(0, 0, W, H);
 
   for (var i = 0; i < maxConfettis; i++) {
     results.push(particles[i].draw());
