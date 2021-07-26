@@ -201,10 +201,10 @@ function Draw() {
 window.addEventListener(
   "resize",
   function() {
-    //W = window.innerWidth;
-    //H = window.innerHeight;
-    //canvas.width = window.innerWidth;
-    //canvas.height = window.innerHeight;
+    W = window.innerWidth*scal;
+    H = window.innerHeight*scal;
+    canvas.width = window.innerWidth*scal;
+    canvas.height = window.innerHeight*scal;
   },
   false
 );
